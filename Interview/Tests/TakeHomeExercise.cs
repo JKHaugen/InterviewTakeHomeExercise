@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Interview.PageObjects;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -36,6 +37,7 @@ namespace Interview.Tests
         /// NOTE: Please run Build > Clean Solution before zipping your project and emailing it back. Thanks!
         /// 
         /// </summary>
+
         [Test]
         public void TakeHomeExercise1()
         {
@@ -43,8 +45,42 @@ namespace Interview.Tests
             string interest = "Auto";
             string lastNameErrorMessage = "Response required";
             string pageTitle = "Get a Quote";
-
             IWebDriver driver = new ChromeDriver();
+
+            string pulledPageTitle;
+            string firstNameErrorMessage = "Response required";
+            string pulledFirstNameError;
+            string pulledLastNameError;
+
+            // 1.
+            driver.Url = "https://www.ssfcu.org/";
+            SSFCUWebsitePage sSFCUWebsitePage = new SSFCUWebsitePage(driver);
+            sSFCUWebsitePage.NavigateToQuotePage();
+
+            SecurityServiceInsurancePage insurancePage = new SecurityServiceInsurancePage(driver);
+            insurancePage.SelectGetStartedButton();
+
+            // 2.
+            RequestAQuotePage requestAQuotePage = new RequestAQuotePage(driver);
+            pulledPageTitle = requestAQuotePage.GetTitle();
+            Assert.AreEqual(pageTitle, pulledPageTitle);
+
+            // 3.
+            requestAQuotePage.InputFirstName(firstName);
+
+            // 4.
+            requestAQuotePage.SelectInterest(interest);
+
+            // 5.
+            requestAQuotePage.SelectSubmitButton();
+
+            // 6.
+            pulledFirstNameError = requestAQuotePage.GetFirstNameErrorMessage();
+            Assert.AreNotEqual(firstNameErrorMessage, pulledFirstNameError);
+
+            // 7.
+            pulledLastNameError = requestAQuotePage.GetLastNameErrorMessage();
+            Assert.AreEqual(lastNameErrorMessage, pulledLastNameError);
 
             driver.Quit();
         }

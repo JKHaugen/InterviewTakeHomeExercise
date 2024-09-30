@@ -63,6 +63,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PageObjects\BasePage.cs" />
+    <Compile Include="PageObjects\RequestAQuotePage.cs" />
+    <Compile Include="PageObjects\SecurityServiceInsurancePage.cs" />
+    <Compile Include="PageObjects\SSFCUWebsitePage.cs" />
     <Compile Include="Tests\TakeHomeExercise.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
